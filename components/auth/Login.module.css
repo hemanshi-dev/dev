@@ -1,0 +1,54 @@
+/* Wrapper for the entire login page */
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-size: cover;
+    background-image: url('/landing-image.webp');
+    background-color: #f5f5f5;
+}
+
+/* Styling for the login form container */
+.form {
+    border-right: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-7));
+    min-height: 100vh;
+    max-width: 450px;
+    width: 100%;
+    background-color: white;
+}
+
+/* Animation wrapper for loading */
+.animationWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    z-index: 1000;
+}
+
+/* Shake animation for the image */
+.shakeImage {
+    width: 150px; /* Adjust as needed */
+    animation: shake 1.5s infinite ease-in-out;
+}
+
+/* Keyframes for shaking effect */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+}

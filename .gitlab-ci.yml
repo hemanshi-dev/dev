@@ -1,0 +1,77 @@
+stages:
+    - build
+    - deploy
+
+build:
+    image: node:18
+    stage: build
+    script:
+        - echo "" > .env
+        - if [ "$CI_COMMIT_BRANCH" = "production" ]; then echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_PRODUCTION_API_URL" >> .env; elif [ "$CI_COMMIT_BRANCH" = "staging" ]; then echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_STAGING_API_URL" >> .env; fi
+        - cat .env
+        - npm install --legacy-peer-deps
+        - npm run build
+    artifacts:
+        paths:
+            - .next/
+            - public/
+            - package.json
+            - package-lock.json
+            - .env
+        expire_in: 1 hour
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "staging"'
+        - if: '$CI_COMMIT_BRANCH == "production"'
+
+deploy:
+    image: node:18
+    stage: deploy
+    before_script:
+        - mkdir -p ~/.ssh
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+        - chmod 600 ~/.ssh/id_rsa
+        - ssh-keyscan -H $STAGING_VM_IP >> ~/.ssh/known_hosts
+        - ssh-keyscan -H $PRODUCTION_VM_IP >> ~/.ssh/known_hosts
+    script:
+        - |
+            if [ "$CI_COMMIT_BRANCH" == "staging" ]; then
+              TARGET_VM=$STAGING_VM_IP
+              TARGET_SERVER="/var/www/devco-react-staging"
+              TARGET_URL="http://$STAGING_VM_IP/"
+            elif [ "$CI_COMMIT_BRANCH" == "production" ]; then
+              TARGET_VM=$PRODUCTION_VM_IP
+              TARGET_SERVER="/var/www/devco-react-production"
+              TARGET_URL="http://$PRODUCTION_VM_IP/"
+            else
+              echo "Unsupported branch: $CI_COMMIT_BRANCH"
+              exit 1
+            fi
+
+            # Copy build files to the target VM
+            echo "logged-in user: $(whoami)"
+            scp -r .next/ public/ package.json package-lock.json .env $USER@$TARGET_VM:$TARGET_SERVER
+
+            # SSH into the target VM and deploy
+            ssh $USER@$TARGET_VM << EOF
+              cd $TARGET_SERVER
+              npm install --omit=dev --legacy-peer-deps
+              echo "pm2 check"
+              if ! command -v pm2 &> /dev/null; then npm install -g pm2; fi
+
+              # Delete existing PM2 process for the branch, if it exists
+              echo "pm2 process delete if it exists"
+              pm2 delete devco-react-$CI_COMMIT_BRANCH || true
+
+              # Start a new PM2 process
+              echo "pm2 start"
+              pm2 start npm --name devco-react-$CI_COMMIT_BRANCH -- start --update-env
+              pm2 save
+            EOF
+
+            echo "Deployment to $TARGET_VM completed."
+    environment:
+        name: $CI_COMMIT_BRANCH
+        url: $TARGET_URL
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "staging"'
+        - if: '$CI_COMMIT_BRANCH == "production"'
