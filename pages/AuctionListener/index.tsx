@@ -465,6 +465,7 @@ const HLS_URL = process.env.NEXT_PUBLIC_HLS_URL || "http://localhost:8082/hls/au
 const PUSHER_KEY = process.env.NEXT_PUBLIC_PUSHER_KEY || "f4ef13f2abb808c1baad";
 const PUSHER_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_CLUSTER || "ap2";
 
+
 export default function AuctionListener() {
   const [isConnected, setIsConnected] = useState(false);
   const [isBroadcasting, setIsBroadcasting] = useState(false);
@@ -848,7 +849,7 @@ export default function AuctionListener() {
             {error}
           </div>
         )}
-        
+
         {/* Main Button */}
         <button
           onClick={handleToggle}
