@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev -p 8082",
     "build": "next build --turbopack && npm run build:server",
     "build:server": "tsc -p server/tsconfig.server.json",
-    "start": "next start",
+    "start": "next start -p 8082",
     "server": "tsc -p server/tsconfig.server.json && node dist/server.js",
     "lint": "eslint"
   },
