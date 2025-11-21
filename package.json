@@ -17,6 +17,7 @@
     "@mantine/hooks": "7.16.2",
     "@mantine/modals": "^7.16.2",
     "@mantine/notifications": "^7.16.2",
+    "@pusher/push-notifications-web": "^1.1.0",
     "@tabler/icons-react": "^3.29.0",
     "@types/lodash": "^4.17.15",
     "@types/react-virtualized": "^9.22.0",

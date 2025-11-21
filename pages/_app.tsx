@@ -11,6 +11,7 @@ import {ModalsProvider} from "@mantine/modals";
 import PusherHandler from "../components/common/PusherHandler";
 
 export default function App({Component, pageProps}: any) {
+    
     return (
         <MantineProvider theme={theme}>
             <ModalsProvider>
