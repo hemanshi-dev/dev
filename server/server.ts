@@ -679,6 +679,7 @@ wss.on("connection", (ws, req) => {
   const url = new URL(req.url || "/", `http://${host}`);
   const role = url.searchParams.get("role");
 
+  
   console.log(`🔌 WebSocket connection - Role: ${role}`);
   
   if (role === "broadcaster") {
