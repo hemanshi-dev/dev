@@ -337,7 +337,7 @@ export default function Home() {
       <div className="content">
         <h1 className="title">Auction Speaker</h1>
         
-        {/* Connection Status Indicator */}
+        {/* Connection Status Indicator
         <div style={{ 
           marginBottom: "20px", 
           padding: "10px", 
@@ -350,7 +350,7 @@ export default function Home() {
           {connectionStatus === "connected" && "✅ Connected to server"}
           {connectionStatus === "connecting" && "⏳ Connecting..."}
           {connectionStatus === "disconnected" && "❌ Disconnected - Reconnecting..."}
-        </div>
+        </div> */}
 
         <button
           className={`record-button ${isRecording ? "recording" : "record"}`}
