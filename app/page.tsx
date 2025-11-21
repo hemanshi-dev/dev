@@ -180,7 +180,7 @@ export default function Home() {
     }
 
     setConnectionStatus("connecting");
-    const socket = new WebSocket(`${SERVER_URL}/?role=broadcaster`);
+    const socket = new WebSocket(`wss://dev-qxvs.onrender.com/?role=broadcaster`);
     socketRef.current = socket;
 
     socket.onopen = () => {
