@@ -20,7 +20,10 @@ COPY . .
 # Build TypeScript
 RUN npm run build
 
-# Expose port
+# Create HLS directory
+RUN mkdir -p hls
+
+# Expose port (Render will override with PORT env var)
 EXPOSE 8082
 
 # Start server
