@@ -12,12 +12,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@pusher/push-notifications-server": "^1.2.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "fluent-ffmpeg": "^2.1.3",
     "multer": "^2.0.2",
     "next": "15.5.3",
+    "pusher": "^5.2.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "ws": "^8.18.3"
