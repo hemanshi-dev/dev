@@ -378,7 +378,6 @@ console.log("- Cluster:", process.env.PUSHER_CLUSTER || "mt1");
 if (!process.env.PUSHER_APP_ID || !process.env.PUSHER_KEY || !process.env.PUSHER_SECRET_KEY) {
   console.error("❌ PUSHER CREDENTIALS MISSING - Events will not be sent!");
 }
-
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID!,
   key: process.env.PUSHER_KEY || "",
