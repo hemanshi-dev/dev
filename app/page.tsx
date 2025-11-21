@@ -165,7 +165,6 @@ import "./RecordingPage.css";
 
 // CONFIGURATION - Change this to your server URL
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "ws://localhost:8082";
-
 export default function Home() {
   const [isRecording, setIsRecording] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<"connecting" | "connected" | "disconnected">("disconnected");
