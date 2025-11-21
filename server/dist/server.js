@@ -72,6 +72,7 @@ const server = app.listen(PORT, "0.0.0.0", () => {
     console.log(`📡 WebSocket available at ws://0.0.0.0:${PORT}`);
     console.log(`🎵 HLS at /hls/audio.m3u8`);
 });
+
 server.on("error", (err) => {
     console.error("❌ Server error:", err);
     process.exit(1);
